@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"strings"
 	"sync"
 )
 
@@ -18,8 +19,8 @@ func worker(message []byte, key byte, wg *sync.WaitGroup) {
 	defer wg.Done() // Signal the WaitGroup when the worker finishes
 
 	xored := xorWithByte(message, key)
-
-	fmt.Printf("Key: 0x%02x | Result: %s\n", key, xored)
+	cleanResult := strings.ReplaceAll(string(xored), "\n", "")
+	fmt.Printf("Key: 0x%02x | Result: %s\n", key, cleanResult)
 }
 
 func main() {
